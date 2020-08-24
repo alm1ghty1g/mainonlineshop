@@ -57,6 +57,8 @@ public class UserEntity {
 
     private String role;
 
+    private boolean active;
+
     @OneToOne
     private CartEntity cartEntity;
 

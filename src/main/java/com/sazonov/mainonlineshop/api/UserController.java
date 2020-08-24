@@ -68,6 +68,7 @@ public class UserController {
             System.out.println("user " + user.toString());
             return ResponseEntity.ok(new JwtResponse(jwt, user.getEmail(), user.getPassword(), user.getRole()));
         } catch (AuthenticationException e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }

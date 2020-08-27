@@ -2,12 +2,13 @@ package com.sazonov.mainonlineshop.userentity;
 
 
 import com.sazonov.mainonlineshop.shopentity.CartEntity;
+import com.sazonov.mainonlineshop.shopentity.OrderEntity;
 import lombok.*;
 
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
+import java.util.Set;
 
 
 @Builder
@@ -61,6 +62,10 @@ public class UserEntity {
 
     @OneToOne
     private CartEntity cartEntity;
+
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userEntity")
+    private Set<OrderEntity> orderEntitySet;
 
 
 }

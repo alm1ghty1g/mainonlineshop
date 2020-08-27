@@ -4,9 +4,11 @@ package com.sazonov.mainonlineshop.mapper;
 import com.sazonov.mainonlineshop.dto.CartDto;
 import com.sazonov.mainonlineshop.dto.CategoryDto;
 import com.sazonov.mainonlineshop.dto.LineItemDto;
+import com.sazonov.mainonlineshop.dto.OrderDto;
 import com.sazonov.mainonlineshop.shopentity.CartEntity;
 import com.sazonov.mainonlineshop.shopentity.CategoryEntity;
 import com.sazonov.mainonlineshop.shopentity.LineItemEntity;
+import com.sazonov.mainonlineshop.shopentity.OrderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class ShopMapper {
 
     @Autowired
     private ProductMapper productMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
 
     public Function<LineItemEntity, LineItemDto> lineItemToDto = p -> getLineItemDto(p);
@@ -103,6 +108,33 @@ public class ShopMapper {
 
                 .build();
     }
+
+
+    public OrderDto getOrderDto(OrderEntity orderEntity) {
+
+        return OrderDto.builder()
+                .id(orderEntity.getId())
+                .created(orderEntity.getCreated())
+                .orderPrice(orderEntity.getOrderPrice())
+                .lineItemDtoSet(collectionToList(orderEntity.getLineItemEntitySet(), lineItemToDto))
+                .userDto(userMapper.getUserDto(orderEntity.getUserEntity()))
+                .build();
+    }
+
+
+    public OrderEntity getOrderEntity(OrderDto orderDto) {//FIXME
+
+        return OrderEntity.builder()
+                .id(orderDto.getId())
+                .created(orderDto.getCreated())
+                .lineItemEntitySet(collectionToSet(orderDto.getLineItemDtoSet(), lineItemToEntity))
+                .orderPrice(orderDto.getOrderPrice())
+                .userEntity(userMapper.getUserEntity(orderDto.getUserDto()))
+                .build();
+
+    }
+
+
 
 
 }

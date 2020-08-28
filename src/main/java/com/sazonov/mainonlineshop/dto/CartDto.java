@@ -30,6 +30,7 @@ public class CartDto {
         this.lineItemDtoSet.add(itemDto);
     }
 
+
     public double countPrice() {
 
         double price = 0;

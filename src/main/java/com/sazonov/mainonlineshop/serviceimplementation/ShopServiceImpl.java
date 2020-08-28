@@ -9,10 +9,7 @@ import com.sazonov.mainonlineshop.mapper.ShopMapper;
 import com.sazonov.mainonlineshop.mapper.UserMapper;
 import com.sazonov.mainonlineshop.repository.*;
 import com.sazonov.mainonlineshop.serviceinterface.ShopService;
-import com.sazonov.mainonlineshop.shopentity.CartEntity;
-import com.sazonov.mainonlineshop.shopentity.LineItemEntity;
-import com.sazonov.mainonlineshop.shopentity.OrderEntity;
-import com.sazonov.mainonlineshop.shopentity.ProductEntity;
+import com.sazonov.mainonlineshop.shopentity.*;
 import com.sazonov.mainonlineshop.userentity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -107,7 +104,8 @@ public class ShopServiceImpl implements ShopService {
                 .lineItemDtoSet(userDto.getCartDto().getLineItemDtoSet())
                 .userDto(userDto)
                 .created(LocalDate.now())
-
+                .orderPrice(userDto.getCartDto().countPrice())
+                .status(Statuses.NEW.name())
                 .build();
 
         OrderEntity orderEntity = shopMapper.getOrderEntity(orderDto);

@@ -22,8 +22,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-
-
 public class UserEntity {
 
 
@@ -67,5 +65,7 @@ public class UserEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "userEntity")
     private Set<OrderEntity> orderEntitySet;
 
+    @OneToMany(mappedBy = "userEntity")
+    private Set<CardEntity> cardEntitySet;
 
 }

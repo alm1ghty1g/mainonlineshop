@@ -33,5 +33,7 @@ public class UserDto {
 
     private CartDto cartDto;
 
+    private CardDto cardDto;
+
 
 }

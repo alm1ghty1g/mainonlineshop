@@ -17,6 +17,8 @@ public class OrderDto {
 
     private int id;
 
+    private String status;
+
     private List<LineItemDto> lineItemDtoSet;
 
     private double orderPrice;
@@ -24,5 +26,8 @@ public class OrderDto {
     private UserDto userDto;
 
     private LocalDate created;
+
+
+
 
 }

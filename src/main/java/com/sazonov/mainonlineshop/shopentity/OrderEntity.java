@@ -2,6 +2,7 @@ package com.sazonov.mainonlineshop.shopentity;
 
 import com.sazonov.mainonlineshop.userentity.UserEntity;
 import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
@@ -23,6 +24,9 @@ public class OrderEntity {
     private int id;
 
     @Column
+    private String status;
+
+    @Column
     private double orderPrice;
 
 
@@ -41,3 +45,6 @@ public class OrderEntity {
 
 
 }
+
+
+

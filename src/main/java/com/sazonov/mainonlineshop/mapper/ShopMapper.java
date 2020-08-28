@@ -114,6 +114,7 @@ public class ShopMapper {
 
         return OrderDto.builder()
                 .id(orderEntity.getId())
+                .status(orderEntity.getStatus())
                 .created(orderEntity.getCreated())
                 .orderPrice(orderEntity.getOrderPrice())
                 .lineItemDtoSet(collectionToList(orderEntity.getLineItemEntitySet(), lineItemToDto))
@@ -126,6 +127,7 @@ public class ShopMapper {
 
         return OrderEntity.builder()
                 .id(orderDto.getId())
+                .status(orderDto.getStatus())
                 .created(orderDto.getCreated())
                 .lineItemEntitySet(collectionToSet(orderDto.getLineItemDtoSet(), lineItemToEntity))
                 .orderPrice(orderDto.getOrderPrice())
@@ -133,8 +135,4 @@ public class ShopMapper {
                 .build();
 
     }
-
-
-
-
 }

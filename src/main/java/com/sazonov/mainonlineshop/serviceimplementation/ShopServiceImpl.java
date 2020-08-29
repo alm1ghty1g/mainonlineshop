@@ -1,9 +1,6 @@
 package com.sazonov.mainonlineshop.serviceimplementation;
 
-import com.sazonov.mainonlineshop.dto.CartDto;
-import com.sazonov.mainonlineshop.dto.OrderDto;
-import com.sazonov.mainonlineshop.dto.ProductDto;
-import com.sazonov.mainonlineshop.dto.UserDto;
+import com.sazonov.mainonlineshop.dto.*;
 import com.sazonov.mainonlineshop.mapper.ProductMapper;
 import com.sazonov.mainonlineshop.mapper.ShopMapper;
 import com.sazonov.mainonlineshop.mapper.UserMapper;
@@ -49,7 +46,6 @@ public class ShopServiceImpl implements ShopService {
     private OrderRepository orderRepository;
 
 
-
     public CartDto addProductToCart(int id) {
 
         ProductEntity productEntity = productRepository.findById(id);
@@ -61,7 +57,6 @@ public class ShopServiceImpl implements ShopService {
         System.out.println("-----> " + auth.getName());
 
         CartEntity cartEntity = userEntity.getCartEntity();
-
 
 
         List<LineItemEntity> items = cartEntity.getLineItemEntitySet().stream()
@@ -102,7 +97,13 @@ public class ShopServiceImpl implements ShopService {
 
         OrderDto orderDto = OrderDto.builder()
                 .lineItemDtoSet(userDto.getCartDto().getLineItemDtoSet())
-                .userDto(userDto)
+                .userShortResponseDto(UserShortResponseDto.builder()
+                        .id(userDto.getId())
+                        .firstName(userDto.getFirstName())
+                        .lastName(userDto.getLastName())
+                        .email(userDto.getEmail())
+                        .phoneNumber(userDto.getPhoneNumber())
+                        .build())
                 .created(LocalDate.now())
                 .orderPrice(userDto.getCartDto().countPrice())
                 .status(Statuses.NEW.name())

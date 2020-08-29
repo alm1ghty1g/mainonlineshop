@@ -1,14 +1,13 @@
 package com.sazonov.mainonlineshop.mapper;
 
 
-import com.sazonov.mainonlineshop.dto.CartDto;
-import com.sazonov.mainonlineshop.dto.CategoryDto;
-import com.sazonov.mainonlineshop.dto.LineItemDto;
-import com.sazonov.mainonlineshop.dto.OrderDto;
+import com.sazonov.mainonlineshop.dto.*;
+import com.sazonov.mainonlineshop.repository.UserRepository;
 import com.sazonov.mainonlineshop.shopentity.CartEntity;
 import com.sazonov.mainonlineshop.shopentity.CategoryEntity;
 import com.sazonov.mainonlineshop.shopentity.LineItemEntity;
 import com.sazonov.mainonlineshop.shopentity.OrderEntity;
+import com.sazonov.mainonlineshop.userentity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,9 @@ public class ShopMapper {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     public Function<LineItemEntity, LineItemDto> lineItemToDto = p -> getLineItemDto(p);
@@ -112,18 +114,28 @@ public class ShopMapper {
 
     public OrderDto getOrderDto(OrderEntity orderEntity) {
 
+       UserDto userDto = userMapper.getUserDto(orderEntity.getUserEntity());
+
         return OrderDto.builder()
                 .id(orderEntity.getId())
                 .status(orderEntity.getStatus())
                 .created(orderEntity.getCreated())
                 .orderPrice(orderEntity.getOrderPrice())
                 .lineItemDtoSet(collectionToList(orderEntity.getLineItemEntitySet(), lineItemToDto))
-                .userDto(userMapper.getUserDto(orderEntity.getUserEntity()))
+                .userShortResponseDto(UserShortResponseDto.builder()
+                        .id(userDto.getId())
+                        .firstName(userDto.getFirstName())
+                        .lastName(userDto.getLastName())
+                        .email(userDto.getEmail())
+                        .phoneNumber(userDto.getPhoneNumber())
+                        .build())
                 .build();
     }
 
 
     public OrderEntity getOrderEntity(OrderDto orderDto) {//FIXME
+
+        UserEntity userEntity = userRepository.findById(orderDto.getUserShortResponseDto().getId());
 
         return OrderEntity.builder()
                 .id(orderDto.getId())
@@ -131,7 +143,7 @@ public class ShopMapper {
                 .created(orderDto.getCreated())
                 .lineItemEntitySet(collectionToSet(orderDto.getLineItemDtoSet(), lineItemToEntity))
                 .orderPrice(orderDto.getOrderPrice())
-                .userEntity(userMapper.getUserEntity(orderDto.getUserDto()))
+                .userEntity(userEntity)
                 .build();
 
     }

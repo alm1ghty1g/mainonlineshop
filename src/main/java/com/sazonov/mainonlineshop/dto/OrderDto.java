@@ -23,11 +23,8 @@ public class OrderDto {
 
     private double orderPrice;
 
-    private UserDto userDto;
+    private UserShortResponseDto userShortResponseDto;
 
     private LocalDate created;
-
-
-
 
 }

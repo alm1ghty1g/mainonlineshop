@@ -30,7 +30,6 @@ public class CardServiceImpl implements CardService {
 
     public CardDto saveCard(CardDto cardDto) {
 
-
         CardEntity cardEntity = cardMapper.getCardEntity(cardDto);
 
         cardRepository.save(cardEntity);

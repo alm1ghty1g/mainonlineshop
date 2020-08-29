@@ -24,7 +24,6 @@ public class CardController {
     @PostMapping("/addCard")
     public ResponseEntity<CardDto> saveCard(@RequestBody AddCardDtoRequest addCardDtoRequest) {
 
-
         CardDto cardDto = cardMapper.getCardDtoToAddCard(addCardDtoRequest);
 
         return ResponseEntity.ok(cardService.saveCard(cardDto));

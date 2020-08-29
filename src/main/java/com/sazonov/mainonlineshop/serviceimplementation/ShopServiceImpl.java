@@ -100,7 +100,7 @@ public class ShopServiceImpl implements ShopService {
 
         UserDto userDto = userMapper.getUserDto(userEntity);
 
-        OrderDto orderDto = new OrderDto().builder()
+        OrderDto orderDto = OrderDto.builder()
                 .lineItemDtoSet(userDto.getCartDto().getLineItemDtoSet())
                 .userDto(userDto)
                 .created(LocalDate.now())

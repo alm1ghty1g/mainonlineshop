@@ -13,8 +13,8 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "card")
-public class CardEntity {
+@Table(name = "creditCard")
+public class CreditCardEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

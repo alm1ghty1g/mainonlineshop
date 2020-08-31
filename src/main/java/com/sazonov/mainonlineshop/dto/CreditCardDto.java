@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 
 
-public class CardDto {
+public class CreditCardDto {
 
     private int id;
 

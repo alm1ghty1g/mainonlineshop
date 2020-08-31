@@ -1,10 +1,10 @@
 package com.sazonov.mainonlineshop.mapper;
 
-import com.sazonov.mainonlineshop.dto.CardDto;
+import com.sazonov.mainonlineshop.dto.CreditCardDto;
 import com.sazonov.mainonlineshop.dto.UserDto;
 import com.sazonov.mainonlineshop.dto.formDto.AddCardDtoRequest;
 import com.sazonov.mainonlineshop.repository.UserRepository;
-import com.sazonov.mainonlineshop.userentity.CardEntity;
+import com.sazonov.mainonlineshop.userentity.CreditCardEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class CardMapper {
+public class CreditCardMapper {
 
 
     @Autowired
@@ -26,8 +26,8 @@ public class CardMapper {
     private UserRepository userRepository;
 
 
-    public Function<CardDto, CardEntity> cardToEntity = p -> getCardEntity(p);
-    public Function<CardEntity, CardDto> cardToDto = p -> getCardDto(p);
+    public Function<CreditCardDto, CreditCardEntity> cardToEntity = p -> getCreditCardEntity(p);
+    public Function<CreditCardEntity, CreditCardDto> cardToDto = p -> getCreditCardDto(p);
 
     public <A, R> List<R> collectionToList(Collection<A> collection, Function<A, R> mapper) {
         return collection.stream().map(p -> mapper.apply(p)).collect(Collectors.toList());
@@ -35,13 +35,13 @@ public class CardMapper {
 
 
 
-    public CardDto getCardDtoToAddCard(AddCardDtoRequest addCardDtoRequest) {
+    public CreditCardDto getCreditCardDtoToAddCard(AddCardDtoRequest addCardDtoRequest) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         UserDto userDto = userMapper.getUserDto(userRepository.findByEmail(auth.getName()));
 
-        return CardDto.builder()
+        return CreditCardDto.builder()
                 .cardNumber(addCardDtoRequest.getCardNumber())
                 .expirationDate(addCardDtoRequest.getExpirationDate())
                 .cardType(addCardDtoRequest.getCardType())
@@ -50,26 +50,26 @@ public class CardMapper {
 
     }
 
-    public CardDto getCardDto(CardEntity cardEntity) {
+    public CreditCardDto getCreditCardDto(CreditCardEntity creditCardEntity) {
 
-        return CardDto.builder()
-                .id(cardEntity.getId())
-                .cardNumber(cardEntity.getCardNumber())
-                .expirationDate(cardEntity.getExpirationDate())
-                .cardType(cardEntity.getCardType())
-                .userDto(userMapper.getUserDto(cardEntity.getUserEntity()))
+        return CreditCardDto.builder()
+                .id(creditCardEntity.getId())
+                .cardNumber(creditCardEntity.getCardNumber())
+                .expirationDate(creditCardEntity.getExpirationDate())
+                .cardType(creditCardEntity.getCardType())
+                .userDto(userMapper.getUserDto(creditCardEntity.getUserEntity()))
 
                 .build();
     }
 
-    public CardEntity getCardEntity(CardDto cardDto) {
+    public CreditCardEntity getCreditCardEntity(CreditCardDto creditCardDto) {
 
-        return CardEntity.builder()
-                .id(cardDto.getId())
-                .cardNumber(cardDto.getCardNumber())
-                .expirationDate(cardDto.getExpirationDate())
-                .cardType(cardDto.getCardType())
-                .userEntity(userMapper.getUserEntity(cardDto.getUserDto()))
+        return CreditCardEntity.builder()
+                .id(creditCardDto.getId())
+                .cardNumber(creditCardDto.getCardNumber())
+                .expirationDate(creditCardDto.getExpirationDate())
+                .cardType(creditCardDto.getCardType())
+                .userEntity(userMapper.getUserEntity(creditCardDto.getUserDto()))
 
                 .build();
 

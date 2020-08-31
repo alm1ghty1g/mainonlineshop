@@ -66,6 +66,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
 
+                .antMatchers("/product/add").access("hasAnyRole('ADMIN')")
                 .antMatchers("/profile/**").authenticated()
                // .antMatchers("/cart/**").access("hasAnyRole('CUSTOMER', 'ADMIN', 'MANAGER')")
                 .antMatchers("/addToCart").authenticated()
@@ -85,7 +86,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                // .antMatchers("/api/**").authenticated()
                 //.antMatchers("/api/**").permitAll()
                // .antMatchers("/login").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/user/login").permitAll()
 
 
                 .anyRequest().permitAll()

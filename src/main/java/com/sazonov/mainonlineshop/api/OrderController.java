@@ -22,7 +22,6 @@ public class OrderController {
 
         return ResponseEntity.ok(shopService.placeOrder());
 
-
     }
 
 

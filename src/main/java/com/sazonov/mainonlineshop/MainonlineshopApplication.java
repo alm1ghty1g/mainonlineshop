@@ -61,7 +61,7 @@ public class MainonlineshopApplication {
                     .updated(LocalDate.now())
                     .lastVisit(LocalDate.now())
                     .cartEntity(cartRepository.save(new CartEntity()))
-                    .role(Roles.ADMIN.name())
+                    .role(Roles.ROLE_ADMIN.name())
                     .build();
 
             userRepository.save(admin);
@@ -70,7 +70,7 @@ public class MainonlineshopApplication {
 
             UserEntity manager = UserEntity.builder()
                     .email("manager@mail.com")
-                    .password("manager")
+                    .password("$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu")
                     .firstName("manager")
                     .lastName("managerov")
                     .address("manager street")
@@ -80,7 +80,7 @@ public class MainonlineshopApplication {
                     .updated(LocalDate.now())
                     .lastVisit(LocalDate.now())
                     .cartEntity(cartRepository.save(new CartEntity()))
-                    .role(Roles.MANAGER.name())
+                    .role(Roles.ROLE_MANAGER.name())
                     .build();
 
             userRepository.save(manager);
@@ -88,7 +88,7 @@ public class MainonlineshopApplication {
 
             UserEntity customer = UserEntity.builder()
                     .email("customer@mail.com")
-                    .password("customer")
+                    .password("$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu")
                     .firstName("customer")
                     .lastName("customerov")
                     .address("customer street")
@@ -98,7 +98,7 @@ public class MainonlineshopApplication {
                     .updated(LocalDate.now())
                     .lastVisit(LocalDate.now())
                     .cartEntity(cartRepository.save(new CartEntity()))
-                    .role(Roles.CUSTOMER.name())
+                    .role(Roles.ROLE_CUSTOMER.name())
                     .build();
 
             userRepository.save(customer);

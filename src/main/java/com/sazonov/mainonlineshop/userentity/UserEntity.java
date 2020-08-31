@@ -66,6 +66,6 @@ public class UserEntity {
     private Set<OrderEntity> orderEntitySet;
 
     @OneToMany(mappedBy = "userEntity")
-    private Set<CardEntity> cardEntitySet;
+    private Set<CreditCardEntity> creditCardEntitySet;
 
 }

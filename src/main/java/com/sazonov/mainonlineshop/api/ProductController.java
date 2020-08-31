@@ -10,7 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
-@RestController("/product")
+@RestController
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired

@@ -36,6 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 UserEntity user = userService.findOneByEmail(userAccount);
                 // pwd not necessary
                 // if jwt ok, then authenticate
+                System.out.println("role---------> " + user.getRole());
                 SimpleGrantedAuthority sga = new SimpleGrantedAuthority(user.getRole());
                 ArrayList<SimpleGrantedAuthority> list = new ArrayList<>();
                 list.add(sga);

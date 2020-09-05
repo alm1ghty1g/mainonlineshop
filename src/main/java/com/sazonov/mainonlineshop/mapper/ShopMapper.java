@@ -105,7 +105,7 @@ public class ShopMapper {
 
         return LineItemEntity.builder()
                 .id(lineItemDto.getId())
-                .product(productMapper.getProductEntity(lineItemDto.getProduct()))
+                .product(productMapper.getProductEntityForOrder(lineItemDto.getProduct()))
                 .quantity(lineItemDto.getQuantity())
 
                 .build();

@@ -10,20 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
-@RestController("/cart")
+@RestController
+@RequestMapping("/cart")
 public class CartController {
 
 
-    @Autowired
-    private ProductService productService;
 
     @Autowired
     private ShopService shopService;
 
-    @Autowired
-    private UserService userService;
 
-    @PostMapping("/addToCart")
+
+    @PostMapping("/add")
     public ResponseEntity<CartDto> addToCart(@RequestParam("id") int id) {
 
 

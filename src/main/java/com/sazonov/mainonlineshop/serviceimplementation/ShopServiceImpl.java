@@ -106,7 +106,7 @@ public class ShopServiceImpl implements ShopService {
                         .build())
                 .created(LocalDate.now())
                 .orderPrice(userDto.getCartDto().countPrice())
-                .status(Statuses.NEW.name())
+                .status(OrderStatus.NEW.name())
                 .build();
 
         OrderEntity orderEntity = shopMapper.getOrderEntity(orderDto);

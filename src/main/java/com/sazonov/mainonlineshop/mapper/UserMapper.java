@@ -3,9 +3,11 @@ package com.sazonov.mainonlineshop.mapper;
 
 import com.sazonov.mainonlineshop.dto.UserDto;
 import com.sazonov.mainonlineshop.dto.formDto.UserSingUpDtoRequest;
+import com.sazonov.mainonlineshop.exception.UserIsAlreadyExistException;
 import com.sazonov.mainonlineshop.repository.CartRepository;
 import com.sazonov.mainonlineshop.repository.UserRepository;
 import com.sazonov.mainonlineshop.shopentity.CartEntity;
+import com.sazonov.mainonlineshop.userentity.Roles;
 import com.sazonov.mainonlineshop.userentity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,13 +53,19 @@ public class UserMapper {
                 .created(LocalDate.now())
                 .updated(LocalDate.now())
                 .lastVisit(LocalDate.now())
-                .role("CUSTOMER")
+                .role(Roles.ROLE_CUSTOMER.name())
                 .build();
     }
 
 
     public UserEntity getUserEntityForSignUp(UserDto userDto) {
 
+        UserEntity userEntity = userRepository.findByEmail(userDto.getEmail());
+
+        if (userEntity != null) {
+            throw new UserIsAlreadyExistException("User is already exist");
+        }
+        else
         return UserEntity.builder()
                 .id(userDto.getId())
                 .email(userDto.getEmail())
@@ -71,6 +79,7 @@ public class UserMapper {
                 .updated(userDto.getUpdated())
                 .lastVisit(userDto.getLastVisit())
                 .cartEntity(cartRepository.save(new CartEntity()))
+                .active(true)
 
                 .build();
     }

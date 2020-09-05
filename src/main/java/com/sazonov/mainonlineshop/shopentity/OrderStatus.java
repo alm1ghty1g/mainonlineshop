@@ -1,6 +1,6 @@
 package com.sazonov.mainonlineshop.shopentity;
 
-public enum Statuses {
+public enum OrderStatus {
 
     NEW, CLOSED, PAID, UNPAID
 

@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @CrossOrigin
-@RestController("/card")
+@RestController
+@RequestMapping("/credit-card")
 public class CreditCardController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class CreditCardController {
     private CreditCardMapper creditCardMapper;
 
 
-    @PostMapping("/addCard")
+    @PostMapping("/add")
     public ResponseEntity<CreditCardDto> saveCard(@RequestBody AddCardDtoRequest addCardDtoRequest) {
 
         CreditCardDto creditCardDto = creditCardMapper.getCreditCardDtoToAddCard(addCardDtoRequest);
@@ -30,7 +31,7 @@ public class CreditCardController {
 
     }
 
-    @GetMapping("/deleteCard/{id}") //TEST
+    @GetMapping("/delete/{id}") //TEST
     public ResponseEntity<CreditCardDto> delete(@PathVariable("id") int id) {
 
         creditCardService.deleteCard(id);
@@ -38,7 +39,7 @@ public class CreditCardController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getAllCards")
+    @GetMapping("/get-all")
     public ResponseEntity<List<CreditCardDto>> getAllCards() {
 
         return ResponseEntity.ok(creditCardService.getAllCards());

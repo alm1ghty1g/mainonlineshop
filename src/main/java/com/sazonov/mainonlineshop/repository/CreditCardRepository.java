@@ -7,4 +7,6 @@ public interface CreditCardRepository extends JpaRepository<CreditCardEntity, St
 
     CreditCardEntity findById(int id);
 
+    CreditCardEntity findByCardNumber(String number);
+
 }

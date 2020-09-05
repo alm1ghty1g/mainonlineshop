@@ -22,5 +22,5 @@ public class UserSingUpDtoRequest {
 
     private String phoneNumber;
 
-    private String role;
+    //private String role;
 }

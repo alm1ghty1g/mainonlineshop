@@ -62,11 +62,11 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public UserDto findByEmail(String email) {
+    public List<UserDto> findByEmail(String email) {
 
-        UserEntity userEntity = userRepository.findByEmail(email);
+        List<UserEntity> userEntityList = userRepository.findByEmailContains(email);
 
-        return userMapper.getUserDto(userEntity);
+        return userMapper.collectionToList(userEntityList, userMapper.userToDto);
 
     }
 

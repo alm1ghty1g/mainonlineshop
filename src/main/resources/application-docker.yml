@@ -2,9 +2,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
+    username: root
     password: root
-    url: jdbc:mysql://db:3306/mainonlineshop
+    url: jdbc:mysql:/localhost:3306/mainonlineshop
     platform: mysql
     initialization-mode: always
     continue-on-error: true

@@ -75,7 +75,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/getAllUsers")
+    @GetMapping("/get-all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
 
         return ResponseEntity.ok(userService.getAllUsers());
@@ -83,15 +83,15 @@ public class UserController {
     }
 
 
-    @GetMapping("/readUser/{email}")
-    public ResponseEntity<UserDto> readUser(@PathVariable("email") String email) {
+    @GetMapping("/find-by/{email}")
+    public ResponseEntity<List<UserDto>> findByEmail(@PathVariable("email") String email) {
 
         return ResponseEntity.ok(userService.findByEmail(email));
 
     }
 
 
-    @GetMapping("/updateUser/{id}")
+    @GetMapping("/update/{id}")
     public ResponseEntity<UserDto> getUserForUpdate(@PathVariable("id") int id) {
 
 
@@ -99,7 +99,7 @@ public class UserController {
 
     }
 
-    @PostMapping("/updateUser/{id}")
+    @PostMapping("/update/{id}")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
 
         return ResponseEntity.ok(userService.updateUser(userDto));
@@ -107,7 +107,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/deleteUser/{id}")
+    @GetMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable("id") int id) {
 
         UserDto userDto = userService.findById(id);

@@ -103,6 +103,23 @@ public class MainonlineshopApplication {
 
             userRepository.save(customer);
 
+            UserEntity customer1 = UserEntity.builder()
+                    .email("customer1@mail.com")
+                    .password("$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu")
+                    .firstName("customer1")
+                    .lastName("customerov1")
+                    .address("customerov1 street")
+                    .phoneNumber("444")
+                    .active(true)
+                    .created(LocalDate.now())
+                    .updated(LocalDate.now())
+                    .lastVisit(LocalDate.now())
+                    .cartEntity(cartRepository.save(new CartEntity()))
+                    .role(Roles.ROLE_CUSTOMER.name())
+                    .build();
+
+            userRepository.save(customer1);
+
 
 
 
@@ -131,6 +148,27 @@ public class MainonlineshopApplication {
                     .category(fruit)
                     .build();
 
+            ProductEntity apple1 = ProductEntity.builder()
+                    .name("apple1")
+                    .price(1.11)
+                    .expirationDate(LocalDate.now().plusDays(100))
+                    .category(fruit)
+                    .build();
+
+            ProductEntity apple2 = ProductEntity.builder()
+                    .name("apple2")
+                    .price(1.11)
+                    .expirationDate(LocalDate.now().plusDays(100))
+                    .category(fruit)
+                    .build();
+
+            ProductEntity apple3 = ProductEntity.builder()
+                    .name("apple3")
+                    .price(1.11)
+                    .expirationDate(LocalDate.now().plusDays(100))
+                    .category(fruit)
+                    .build();
+
             ProductEntity tomato = ProductEntity.builder()
                     .name("tomato")
                     .price(2.22)
@@ -146,6 +184,9 @@ public class MainonlineshopApplication {
                     .build();
 
             productRepository.save(apple);
+            productRepository.save(apple1);
+            productRepository.save(apple2);
+            productRepository.save(apple3);
             productRepository.save(tomato);
             productRepository.save(pork);
 

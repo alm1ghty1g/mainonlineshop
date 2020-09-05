@@ -3,6 +3,8 @@ package com.sazonov.mainonlineshop.mapper;
 import com.sazonov.mainonlineshop.dto.CreditCardDto;
 import com.sazonov.mainonlineshop.dto.UserDto;
 import com.sazonov.mainonlineshop.dto.formDto.AddCardDtoRequest;
+import com.sazonov.mainonlineshop.exception.CreditCardIsAlreadyExistException;
+import com.sazonov.mainonlineshop.repository.CreditCardRepository;
 import com.sazonov.mainonlineshop.repository.UserRepository;
 import com.sazonov.mainonlineshop.userentity.CreditCardEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class CreditCardMapper {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CreditCardRepository creditCardRepository;
+
 
     public Function<CreditCardDto, CreditCardEntity> cardToEntity = p -> getCreditCardEntity(p);
     public Function<CreditCardEntity, CreditCardDto> cardToDto = p -> getCreditCardDto(p);
@@ -32,7 +37,6 @@ public class CreditCardMapper {
     public <A, R> List<R> collectionToList(Collection<A> collection, Function<A, R> mapper) {
         return collection.stream().map(p -> mapper.apply(p)).collect(Collectors.toList());
     }
-
 
 
     public CreditCardDto getCreditCardDtoToAddCard(AddCardDtoRequest addCardDtoRequest) {
@@ -64,17 +68,22 @@ public class CreditCardMapper {
 
     public CreditCardEntity getCreditCardEntity(CreditCardDto creditCardDto) {
 
-        return CreditCardEntity.builder()
-                .id(creditCardDto.getId())
-                .cardNumber(creditCardDto.getCardNumber())
-                .expirationDate(creditCardDto.getExpirationDate())
-                .cardType(creditCardDto.getCardType())
-                .userEntity(userMapper.getUserEntity(creditCardDto.getUserDto()))
+        CreditCardEntity creditCardEntity = creditCardRepository.findByCardNumber(creditCardDto.getCardNumber());
 
-                .build();
+        if (creditCardEntity != null) {
+            throw new CreditCardIsAlreadyExistException("Credit Card with this number is already exist");
+        } else
+
+            return CreditCardEntity.builder()
+                    .id(creditCardDto.getId())
+                    .cardNumber(creditCardDto.getCardNumber())
+                    .expirationDate(creditCardDto.getExpirationDate())
+                    .cardType(creditCardDto.getCardType())
+                    .userEntity(userMapper.getUserEntity(creditCardDto.getUserDto()))
+
+                    .build();
 
     }
-
 
 }
 

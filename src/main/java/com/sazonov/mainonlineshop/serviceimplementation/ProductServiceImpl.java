@@ -2,6 +2,7 @@ package com.sazonov.mainonlineshop.serviceimplementation;
 
 
 import com.sazonov.mainonlineshop.dto.ProductDto;
+import com.sazonov.mainonlineshop.exception.ProductIsNotExistException;
 import com.sazonov.mainonlineshop.mapper.ProductMapper;
 import com.sazonov.mainonlineshop.repository.CategoryRepository;
 import com.sazonov.mainonlineshop.repository.ProductRepository;
@@ -10,6 +11,11 @@ import com.sazonov.mainonlineshop.shopentity.CategoryEntity;
 import com.sazonov.mainonlineshop.shopentity.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -27,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductDto addProduct(ProductDto productDto) {
 
-        ProductEntity productEntity = productMapper.getProductEntity(productDto);
+        ProductEntity productEntity = productMapper.getProductEntityToAddProduct(productDto);
 
         if (categoryRepository.findById(productEntity.getCategory().getName()).isEmpty()) {
             CategoryEntity ce = categoryRepository.save(productEntity.getCategory());
@@ -40,11 +46,9 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    public ProductDto readProductByName(String name) {
+    public Set<ProductDto> findProductByName(String name) {
 
-        ProductEntity productEntity = productRepository.findByName(name);
-
-        return productMapper.getProductDto(productEntity);
+        return productMapper.collectionToSet(productRepository.findAllByNameContains(name), productMapper.productToDto);
     }
 
 
@@ -73,5 +77,13 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity productEntity = productRepository.findById(productDto.getId());
         productRepository.delete(productEntity);
 
+    }
+
+
+    public List<ProductDto> getAllProducts() {
+
+        List<ProductEntity> productEntityList = productRepository.findAll();
+
+        return productMapper.collectionToList(productEntityList, productMapper.productToDto);
     }
 }

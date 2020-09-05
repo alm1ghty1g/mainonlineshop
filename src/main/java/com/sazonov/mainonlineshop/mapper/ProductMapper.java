@@ -4,6 +4,7 @@ package com.sazonov.mainonlineshop.mapper;
 import com.sazonov.mainonlineshop.dto.CategoryDto;
 import com.sazonov.mainonlineshop.dto.ProductDto;
 import com.sazonov.mainonlineshop.dto.formDto.AddProductDtoRequest;
+import com.sazonov.mainonlineshop.exception.ProductIsAlreadyExistException;
 import com.sazonov.mainonlineshop.repository.CategoryRepository;
 import com.sazonov.mainonlineshop.repository.ProductRepository;
 import com.sazonov.mainonlineshop.shopentity.CategoryEntity;
@@ -12,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -32,7 +32,7 @@ public class ProductMapper {
 
 
 
-    public Function<ProductDto, ProductEntity> productToEntity = p -> getProductEntity(p);
+    public Function<ProductDto, ProductEntity> productToEntity = p -> getProductEntityToAddProduct(p);
     public Function<ProductEntity, ProductDto> productToDto = p -> getProductDto(p);
 
     public Function<CategoryEntity, CategoryDto> categoryToDto = p -> getCategoryDto(p);
@@ -44,6 +44,9 @@ public class ProductMapper {
         return collection.stream().map(p -> mapper.apply(p)).collect(Collectors.toSet());
     }
 
+    public <A, R> List<R> collectionToList(Collection<A> collection, Function<A, R> mapper) {
+        return collection.stream().map(p -> mapper.apply(p)).collect(Collectors.toList());
+    }
 
 
 
@@ -56,6 +59,53 @@ public class ProductMapper {
                 .category(addProductDtoRequest.getCategory())
                 .build();
     }
+
+
+    public ProductEntity getProductEntityForOrder(ProductDto productDto) {
+
+        return ProductEntity.builder()
+                .id(productDto.getId())
+                .name(productDto.getName())
+                .price(productDto.getPrice())
+                .expirationDate(LocalDate.now().plusDays(100))
+                .category(categoryRepository.findById(productDto.getCategory()).orElse(new CategoryEntity(productDto.getCategory())))
+
+                .build();
+    }
+
+
+
+    public ProductEntity getProductEntityToAddProduct(ProductDto productDto) {
+
+        ProductEntity productEntity = productRepository.findByName(productDto.getName());
+
+        if (productEntity != null) {
+            throw new ProductIsAlreadyExistException("Product with this name is already exist in DB");
+        } else
+
+            return ProductEntity.builder()
+                    .id(productDto.getId())
+                    .name(productDto.getName())
+                    .price(productDto.getPrice())
+                    .expirationDate(LocalDate.now().plusDays(100))
+                    .category(categoryRepository.findById(productDto.getCategory()).orElse(new CategoryEntity(productDto.getCategory())))
+
+                    .build();
+    }
+
+
+    public ProductDto getProductDto(ProductEntity productEntity) {
+
+        return ProductDto.builder()
+                .id(productEntity.getId())
+                .name(productEntity.getName())
+                .price(productEntity.getPrice())
+                .expirationDate(productEntity.getExpirationDate())
+                .category(productEntity.getCategory().getName())
+
+                .build();
+    }
+
 
 
     public ProductEntity getProductEntityForUpdate(ProductDto productDto) {
@@ -73,38 +123,11 @@ public class ProductMapper {
 
 
 
-
-
-    public ProductDto getProductDto(ProductEntity productEntity) {
-
-        return ProductDto.builder()
-                .id(productEntity.getId())
-                .name(productEntity.getName())
-                .price(productEntity.getPrice())
-                .expirationDate(productEntity.getExpirationDate())
-                .category(productEntity.getCategory().getName())
-
-                .build();
-    }
-
-    public ProductEntity getProductEntity(ProductDto productDto) {
-
-        return ProductEntity.builder()
-                .id(productDto.getId())
-                .name(productDto.getName())
-                .price(productDto.getPrice())
-                .expirationDate(LocalDate.now().plusDays(100))
-                .category(categoryRepository.findById(productDto.getCategory()).orElse(new CategoryEntity(productDto.getCategory())))
-
-                .build();
-
-    }
-
     public CategoryEntity getCategoryEntity(CategoryDto categoryDto) {
 
         return CategoryEntity.builder()
                 .name(categoryDto.getName())
-                .productSet(collectionToSet(categoryDto.getProductDtoSet(), p -> getProductEntity(p)))
+                .productSet(collectionToSet(categoryDto.getProductDtoSet(), p -> getProductEntityToAddProduct(p)))
 
                 .build();
 

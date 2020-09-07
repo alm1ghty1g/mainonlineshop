@@ -108,7 +108,7 @@ public class UserController {
 
 
     @GetMapping("/delete/{id}")
-    public ResponseEntity delete(@PathVariable("id") int id) {
+    public ResponseEntity<UserDto> delete(@PathVariable("id") int id) {
 
         UserDto userDto = userService.findById(id);
 

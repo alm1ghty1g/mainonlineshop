@@ -26,11 +26,8 @@ public class JwtProvider {
 
     public String generate(Authentication authentication) {
 
-        System.out.println("inside jwt provider");
-
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        System.out.println("user details " + userDetails.toString());
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())

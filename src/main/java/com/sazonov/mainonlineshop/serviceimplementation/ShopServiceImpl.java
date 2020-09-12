@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class ShopServiceImpl implements ShopService {
 
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private UserMapper userMapper;
@@ -119,5 +121,15 @@ public class ShopServiceImpl implements ShopService {
         return shopMapper.getOrderDto(orderEntity);
 
 
+    }
+
+
+    public CategoryDto saveCategory(CategoryDto categoryDto) {
+
+        CategoryEntity categoryEntity = shopMapper.getCategoryEntityToSave(categoryDto);
+
+        categoryRepository.save(categoryEntity);
+
+        return shopMapper.getCategoryDto(categoryEntity);
     }
 }

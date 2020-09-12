@@ -53,20 +53,20 @@ public class UserController {
         // throws Exception if authentication failed
 
         try {
-            System.out.println("inside login " + loginForm.toString());
 
             UsernamePasswordAuthenticationToken utoken = new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword());
-            System.out.println("utoken " + utoken);
+
             Authentication authentication = authenticationManager.authenticate(utoken);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println("after setAuthentication");
-            String jwt = jwtProvider.generate(authentication);//fix me
-            System.out.println("jwt " + jwt);
+
+            String jwt = jwtProvider.generate(authentication);
+
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
             UserEntity user = userService.findOneByEmail(userDetails.getUsername());
 
-            System.out.println("user " + user.toString());
+
             return ResponseEntity.ok(new JwtResponse(jwt, user.getEmail(), user.getPassword(), user.getRole()));
         } catch (AuthenticationException e) {
             e.printStackTrace();

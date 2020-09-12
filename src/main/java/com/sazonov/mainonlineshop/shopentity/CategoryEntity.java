@@ -32,5 +32,9 @@ public class CategoryEntity {
 
 
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany
+    private Set<CategoryEntity> subCategories = new HashSet<>();
 
 }

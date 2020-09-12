@@ -2,6 +2,9 @@ package com.sazonov.mainonlineshop.mapper;
 
 
 import com.sazonov.mainonlineshop.dto.*;
+import com.sazonov.mainonlineshop.dto.formDto.AddCategoryDtoRequest;
+import com.sazonov.mainonlineshop.exception.CategoryIsAlreadyExistException;
+import com.sazonov.mainonlineshop.repository.CategoryRepository;
 import com.sazonov.mainonlineshop.repository.UserRepository;
 import com.sazonov.mainonlineshop.shopentity.CartEntity;
 import com.sazonov.mainonlineshop.shopentity.CategoryEntity;
@@ -30,6 +33,9 @@ public class ShopMapper {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
 
     public Function<LineItemEntity, LineItemDto> lineItemToDto = p -> getLineItemDto(p);
 
@@ -46,6 +52,28 @@ public class ShopMapper {
 
         return collection.stream().map(p -> mapper.apply(p)).collect(Collectors.toSet());
 
+    }
+
+
+    public CategoryDto getCategoryDtoToAddCategory(AddCategoryDtoRequest addCategoryDtoRequest){
+
+        return CategoryDto.builder()
+                .name(addCategoryDtoRequest.getName())
+
+                .build();
+    }
+    public CategoryEntity getCategoryEntityToSave(CategoryDto categoryDto) {
+
+        return categoryRepository.findById(categoryDto.getName()).orElse(new CategoryEntity(categoryDto.getName()));
+
+    }
+
+    public CategoryDto getCategoryDto(CategoryEntity categoryEntity) {
+
+        return CategoryDto.builder()
+                .name(categoryEntity.getName())
+
+                .build();
     }
 
 
@@ -72,23 +100,6 @@ public class ShopMapper {
 
     }
 
-    public CategoryEntity getCategoryEntity(CategoryDto categoryDto) {
-
-        return CategoryEntity.builder()
-                .name(categoryDto.getName())
-
-                .build();
-
-    }
-
-    public CategoryDto getCategoryDto(CategoryEntity categoryEntity) {
-
-        return CategoryDto.builder()
-                .name(categoryEntity.getName())
-
-                .build();
-
-    }
 
     public LineItemDto getLineItemDto(LineItemEntity lineItemEntity) {
 

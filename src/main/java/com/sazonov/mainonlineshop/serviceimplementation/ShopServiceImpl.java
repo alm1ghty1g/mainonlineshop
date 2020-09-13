@@ -132,4 +132,14 @@ public class ShopServiceImpl implements ShopService {
 
         return shopMapper.getCategoryDto(categoryEntity);
     }
+
+
+
+    public CategoryDto getCategory(String name) {
+
+        CategoryEntity categoryEntity = categoryRepository.findById(name).orElse(null);
+
+        return shopMapper.getCategoryDto(categoryEntity);
+
+    }
 }

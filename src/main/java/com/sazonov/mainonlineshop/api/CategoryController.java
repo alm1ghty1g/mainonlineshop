@@ -31,4 +31,12 @@ public class CategoryController {
 
     }
 
+    @GetMapping("/find/{name}")
+    public ResponseEntity<CategoryDto> getCategoryInfo(@PathVariable("name") String name) {
+
+       return ResponseEntity.ok(shopService.getCategory(name));
+
+
+    }
+
 }

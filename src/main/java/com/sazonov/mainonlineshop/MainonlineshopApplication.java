@@ -20,6 +20,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootApplication
 public class MainonlineshopApplication {
@@ -139,13 +141,21 @@ public class MainonlineshopApplication {
             categoryRepository.save(vegetable);
             categoryRepository.save(meat);
 
+            CategoryEntity appleCategory = CategoryEntity.builder()
+                    .name("appleCategory")
+                    .productSet(new HashSet<>())
+                    .build();
 
+            categoryRepository.save(appleCategory);
+            Set<CategoryEntity> subCatories = Set.of(appleCategory);
+            fruit.setSubCategories(subCatories);
+            categoryRepository.save(fruit);
 
             ProductEntity apple = ProductEntity.builder()
                     .name("apple")
                     .price(1.11)
                     .expirationDate(LocalDate.now().plusDays(100))
-                    .category(fruit)
+                    .category(appleCategory)
                     .build();
 
             ProductEntity apple1 = ProductEntity.builder()
@@ -189,6 +199,9 @@ public class MainonlineshopApplication {
             productRepository.save(apple3);
             productRepository.save(tomato);
             productRepository.save(pork);
+
+            appleCategory.getProductSet().add(apple);
+            categoryRepository.save(appleCategory);
 
         };
 

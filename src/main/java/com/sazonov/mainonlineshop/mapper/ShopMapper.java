@@ -6,10 +6,7 @@ import com.sazonov.mainonlineshop.dto.formDto.AddCategoryDtoRequest;
 import com.sazonov.mainonlineshop.exception.CategoryIsAlreadyExistException;
 import com.sazonov.mainonlineshop.repository.CategoryRepository;
 import com.sazonov.mainonlineshop.repository.UserRepository;
-import com.sazonov.mainonlineshop.shopentity.CartEntity;
-import com.sazonov.mainonlineshop.shopentity.CategoryEntity;
-import com.sazonov.mainonlineshop.shopentity.LineItemEntity;
-import com.sazonov.mainonlineshop.shopentity.OrderEntity;
+import com.sazonov.mainonlineshop.shopentity.*;
 import com.sazonov.mainonlineshop.userentity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +39,7 @@ public class ShopMapper {
     public Function<LineItemDto, LineItemEntity> lineItemToEntity = p -> getLineItemEntity(p);
 
 
+
     public <A, R> List<R> collectionToList(Collection<A> collection, Function<A, R> mapper) {
 
         return collection.stream().map(p -> mapper.apply(p)).collect(Collectors.toList());
@@ -62,6 +60,7 @@ public class ShopMapper {
 
                 .build();
     }
+
     public CategoryEntity getCategoryEntityToSave(CategoryDto categoryDto) {
 
         return categoryRepository.findById(categoryDto.getName()).orElse(new CategoryEntity(categoryDto.getName()));
@@ -72,7 +71,7 @@ public class ShopMapper {
 
         return CategoryDto.builder()
                 .name(categoryEntity.getName())
-
+                .productDtoSet(collectionToSet(categoryEntity.getProductSet(), productMapper.productToDto))
                 .build();
     }
 

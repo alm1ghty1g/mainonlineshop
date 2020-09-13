@@ -10,4 +10,6 @@ public interface ShopService {
 
     CategoryDto saveCategory(CategoryDto categoryDto);
 
+    CategoryDto getCategory(String name);
+
 }

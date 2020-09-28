@@ -7,6 +7,10 @@ import com.sazonov.mainonlineshop.repository.UserRepository;
 import com.sazonov.mainonlineshop.serviceinterface.UserService;
 import com.sazonov.mainonlineshop.userentity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +20,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserMapper userMapper;
@@ -72,7 +78,11 @@ public class UserServiceImpl implements UserService {
 
     public UserDto updateUser(UserDto userDto) {
 
-        UserEntity userEntity = userMapper.getUserEntityForUpdate(userDto);
+        UsernamePasswordAuthenticationToken userDetails = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
+        UserEntity userEntity = userMapper.getUserEntityForUpdate(userDetails.getName(), userDto);
+
+        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         userRepository.save(userEntity);
 

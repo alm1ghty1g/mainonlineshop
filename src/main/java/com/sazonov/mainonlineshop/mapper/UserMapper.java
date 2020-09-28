@@ -85,11 +85,16 @@ public class UserMapper {
     }
 
 
-    public UserEntity getUserEntityForUpdate(UserDto userDto) {
+    public UserEntity getUserEntityForUpdate(String email, UserDto userDto) {
 
-        UserEntity userEntity = userRepository.findById(userDto.getId());
+        System.out.println("email " + email);
 
-        CartEntity cartEntity = userEntity.getCartEntity();
+        UserEntity userEntity = userRepository.findByEmail(email);
+
+        System.out.println(userDto.toString());
+        System.out.println("----> " + userEntity.toString());
+
+        //CartEntity cartEntity = userEntity.getCartEntity();
 
         userEntity.setEmail(userDto.getEmail());
         userEntity.setPassword(userDto.getPassword());
@@ -101,7 +106,7 @@ public class UserMapper {
         userEntity.setUpdated(LocalDate.now());
         userEntity.setLastVisit(userDto.getLastVisit());
         userEntity.setRole(userDto.getRole());
-        userEntity.setCartEntity(cartEntity);
+       // userEntity.setCartEntity(cartEntity);
 
         return userEntity;
     }

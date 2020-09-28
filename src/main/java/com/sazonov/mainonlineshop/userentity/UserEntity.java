@@ -42,7 +42,7 @@ public class UserEntity {
     @Column(unique = true, nullable = false, length = 30)
     private String lastName;
 
-    @Column(unique = true, nullable = false, length = 100)
+    @Column(unique = true, nullable = true, length = 100)
     private String address;
 
     @Column(unique = true, nullable = false, length = 15)
@@ -67,5 +67,8 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userEntity")
     private Set<CreditCardEntity> creditCardEntitySet;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userEntity")
+    private Set<AddressEntity> addressEntitySet;
 
 }

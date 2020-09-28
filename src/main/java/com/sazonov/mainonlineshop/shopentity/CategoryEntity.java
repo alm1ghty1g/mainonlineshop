@@ -32,6 +32,7 @@ public class CategoryEntity {
 
 
 
+
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany

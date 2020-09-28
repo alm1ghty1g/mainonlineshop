@@ -32,12 +32,12 @@ public class ProductController {
 
     }
 
-    @GetMapping("/find-by/{name}")//Search product using search bar to show all available results
-    public ResponseEntity<Set<ProductDto>> findByName(@PathVariable("name") String name){
-
-        return ResponseEntity.ok(productService.findProductByName(name));
-
-    }
+//    @GetMapping("/find-by/{name}")//Search product using search bar to show all available results
+//    public ResponseEntity<Set<ProductDto>> findByName(@PathVariable("name") String name){
+//
+//        return ResponseEntity.ok(productService.findProductByName(name));
+//
+//    }
 
     @GetMapping("/find-by/{id}")//find and show product from product list using productId
     public ResponseEntity<ProductDto> findById(@PathVariable("id") int id) {

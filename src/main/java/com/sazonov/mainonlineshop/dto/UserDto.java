@@ -35,5 +35,7 @@ public class UserDto {
 
     private CreditCardDto creditCardDto;
 
+    private AddressDto addressDto;
+
 
 }

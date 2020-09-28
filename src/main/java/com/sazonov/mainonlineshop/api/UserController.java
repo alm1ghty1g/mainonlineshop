@@ -66,6 +66,7 @@ public class UserController {
 
             UserEntity user = userService.findOneByEmail(userDetails.getUsername());
 
+            System.out.println("privet user " + user.toString());
 
             return ResponseEntity.ok(new JwtResponse(jwt, user.getEmail(), user.getPassword(), user.getRole()));
         } catch (AuthenticationException e) {
@@ -99,8 +100,10 @@ public class UserController {
 
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/update")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+
+        System.out.println("______> " + userDto.getPassword());
 
         return ResponseEntity.ok(userService.updateUser(userDto));
 

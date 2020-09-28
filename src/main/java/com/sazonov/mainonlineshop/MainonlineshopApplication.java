@@ -147,8 +147,8 @@ public class MainonlineshopApplication {
                     .build();
 
             categoryRepository.save(appleCategory);
-            Set<CategoryEntity> subCatories = Set.of(appleCategory);
-            fruit.setSubCategories(subCatories);
+            Set<CategoryEntity> subCategories = Set.of(appleCategory);
+            fruit.setSubCategories(subCategories);
             categoryRepository.save(fruit);
 
             ProductEntity apple = ProductEntity.builder()

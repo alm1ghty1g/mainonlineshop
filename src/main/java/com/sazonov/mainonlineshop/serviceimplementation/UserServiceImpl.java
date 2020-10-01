@@ -82,6 +82,8 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = userMapper.getUserEntityForUpdate(userDetails.getName(), userDto);
 
+        System.out.println("password----> " + userDto.getPassword());
+
         userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         userRepository.save(userEntity);

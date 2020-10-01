@@ -45,7 +45,7 @@ public class UserEntity {
     @Column(unique = true, nullable = true, length = 100)
     private String address;
 
-    @Column(unique = true, nullable = false, length = 15)
+    @Column(unique = true, nullable = false, length = 30)
     private String phoneNumber;
 
     private LocalDate created;

@@ -85,16 +85,20 @@ public class UserController {
 
 
     @GetMapping("/find-by/{email}")
-    public ResponseEntity<List<UserDto>> findByEmail(@PathVariable("email") String email) {
+    public ResponseEntity<List<UserDto>> findAllByEmail(@PathVariable("email") String email) {
 
-        return ResponseEntity.ok(userService.findByEmail(email));
+        return ResponseEntity.ok(userService.findAllByEmail(email));
+    }
 
+    @GetMapping("/find-one-by/{email}")
+    public ResponseEntity<UserDto> findOneByEmail(@PathVariable("email") String email) {
+
+        return ResponseEntity.ok(userService.findUserByEmail(email));
     }
 
 
     @GetMapping("/update/{id}")
     public ResponseEntity<UserDto> getUserForUpdate(@PathVariable("id") int id) {
-
 
         return ResponseEntity.ok(userService.findById(id));
 
@@ -105,7 +109,9 @@ public class UserController {
 
         System.out.println("______> " + userDto.getPassword());
 
-        return ResponseEntity.ok(userService.updateUser(userDto));
+        userDto = userService.updateUser(userDto);
+
+        return userDto == null? ResponseEntity.badRequest().body(userDto): ResponseEntity.ok(userDto);
 
     }
 

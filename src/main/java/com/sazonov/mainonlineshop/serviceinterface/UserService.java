@@ -11,9 +11,11 @@ public interface UserService {
 
     UserEntity findOneByEmail(String email);
 
+    UserDto findUserByEmail(String email);
+
     List<UserDto> getAllUsers();
 
-    List<UserDto> findByEmail(String email);
+    List<UserDto> findAllByEmail(String email);
 
 
     UserDto findById(int id);

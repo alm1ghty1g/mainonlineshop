@@ -1,6 +1,7 @@
 package com.sazonov.mainonlineshop.serviceimplementation;
 
 import com.sazonov.mainonlineshop.dto.UserDto;
+import com.sazonov.mainonlineshop.exception.WrongPasswordException;
 import com.sazonov.mainonlineshop.mapper.UserMapper;
 import com.sazonov.mainonlineshop.repository.CartRepository;
 import com.sazonov.mainonlineshop.repository.UserRepository;
@@ -44,7 +45,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     public UserEntity findOneByEmail(String email) {
 
         return userRepository.findByEmail(email);
@@ -59,7 +59,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     public UserDto findById(int id) {
 
         UserEntity userEntity = userRepository.findById(id);
@@ -68,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public List<UserDto> findByEmail(String email) {
+    public List<UserDto> findAllByEmail(String email) {
 
         List<UserEntity> userEntityList = userRepository.findByEmailContains(email);
 
@@ -80,15 +79,15 @@ public class UserServiceImpl implements UserService {
 
         UsernamePasswordAuthenticationToken userDetails = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
-        UserEntity userEntity = userMapper.getUserEntityForUpdate(userDetails.getName(), userDto);
+        UserEntity userEntityOrigin = userRepository.findByEmail(userDetails.getName());
 
-        System.out.println("password----> " + userDto.getPassword());
+        if (passwordEncoder.matches(userDto.getPassword(), userEntityOrigin.getPassword())) {
 
-        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-        userRepository.save(userEntity);
-
-        return userMapper.getUserDto(userEntity);
+            UserEntity userEntity = userMapper.getUserEntityForUpdate(userDetails.getName(), userDto);
+            userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            userRepository.save(userEntity);
+            return userMapper.getUserDto(userEntity);
+        } else return null;
     }
 
 
@@ -97,6 +96,16 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findById(userDto.getId());
         userRepository.delete(userEntity);
         cartRepository.delete(userEntity.getCartEntity());
+
+    }
+
+
+    public UserDto findUserByEmail(String email) {
+
+        UserEntity userEntity = userRepository.findByEmail(email);
+
+        return userMapper.getUserDto(userEntity);
+
 
     }
 }

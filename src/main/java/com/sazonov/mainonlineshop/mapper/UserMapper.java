@@ -87,13 +87,8 @@ public class UserMapper {
 
     public UserEntity getUserEntityForUpdate(String email, UserDto userDto) {
 
-        System.out.println("email " + email);
 
         UserEntity userEntity = userRepository.findByEmail(email);
-
-        System.out.println(userDto.toString());
-        System.out.println("----> " + userEntity.toString());
-
         //CartEntity cartEntity = userEntity.getCartEntity();
 
         userEntity.setEmail(userDto.getEmail());

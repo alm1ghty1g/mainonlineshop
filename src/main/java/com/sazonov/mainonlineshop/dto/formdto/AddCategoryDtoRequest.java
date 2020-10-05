@@ -1,4 +1,4 @@
-package com.sazonov.mainonlineshop.dto.formDto;
+package com.sazonov.mainonlineshop.dto.formdto;
 
 
 import lombok.*;

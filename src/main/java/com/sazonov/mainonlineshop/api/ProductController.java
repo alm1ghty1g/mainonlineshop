@@ -2,7 +2,7 @@ package com.sazonov.mainonlineshop.api;
 
 
 import com.sazonov.mainonlineshop.dto.ProductDto;
-import com.sazonov.mainonlineshop.dto.formDto.AddProductDtoRequest;
+import com.sazonov.mainonlineshop.dto.formdto.AddProductDtoRequest;
 import com.sazonov.mainonlineshop.mapper.ProductMapper;
 import com.sazonov.mainonlineshop.serviceinterface.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @CrossOrigin
 @RestController

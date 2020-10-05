@@ -2,8 +2,8 @@ package com.sazonov.mainonlineshop.api;
 
 
 import com.sazonov.mainonlineshop.dto.UserDto;
-import com.sazonov.mainonlineshop.dto.formDto.LoginFormDto;
-import com.sazonov.mainonlineshop.dto.formDto.UserSingUpDtoRequest;
+import com.sazonov.mainonlineshop.dto.formdto.LoginFormDto;
+import com.sazonov.mainonlineshop.dto.formdto.UserSingUpDtoRequest;
 import com.sazonov.mainonlineshop.mapper.UserMapper;
 import com.sazonov.mainonlineshop.security.JWT.JwtProvider;
 import com.sazonov.mainonlineshop.security.JWT.JwtResponse;

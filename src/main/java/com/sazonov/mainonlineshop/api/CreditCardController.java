@@ -1,7 +1,7 @@
 package com.sazonov.mainonlineshop.api;
 
 import com.sazonov.mainonlineshop.dto.CreditCardDto;
-import com.sazonov.mainonlineshop.dto.formDto.AddCardDtoRequest;
+import com.sazonov.mainonlineshop.dto.formdto.AddCardDtoRequest;
 import com.sazonov.mainonlineshop.mapper.CreditCardMapper;
 import com.sazonov.mainonlineshop.serviceinterface.CreditCardService;
 import org.springframework.beans.factory.annotation.Autowired;

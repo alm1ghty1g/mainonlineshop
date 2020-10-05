@@ -2,7 +2,7 @@ package com.sazonov.mainonlineshop.mapper;
 
 
 import com.sazonov.mainonlineshop.dto.UserDto;
-import com.sazonov.mainonlineshop.dto.formDto.UserSingUpDtoRequest;
+import com.sazonov.mainonlineshop.dto.formdto.UserSingUpDtoRequest;
 import com.sazonov.mainonlineshop.exception.UserIsAlreadyExistException;
 import com.sazonov.mainonlineshop.repository.CartRepository;
 import com.sazonov.mainonlineshop.repository.UserRepository;

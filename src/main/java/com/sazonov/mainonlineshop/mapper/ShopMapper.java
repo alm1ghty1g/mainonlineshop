@@ -2,8 +2,7 @@ package com.sazonov.mainonlineshop.mapper;
 
 
 import com.sazonov.mainonlineshop.dto.*;
-import com.sazonov.mainonlineshop.dto.formDto.AddCategoryDtoRequest;
-import com.sazonov.mainonlineshop.exception.CategoryIsAlreadyExistException;
+import com.sazonov.mainonlineshop.dto.formdto.AddCategoryDtoRequest;
 import com.sazonov.mainonlineshop.repository.CategoryRepository;
 import com.sazonov.mainonlineshop.repository.UserRepository;
 import com.sazonov.mainonlineshop.shopentity.*;

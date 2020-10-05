@@ -2,7 +2,7 @@ package com.sazonov.mainonlineshop.api;
 
 
 import com.sazonov.mainonlineshop.dto.CategoryDto;
-import com.sazonov.mainonlineshop.dto.formDto.AddCategoryDtoRequest;
+import com.sazonov.mainonlineshop.dto.formdto.AddCategoryDtoRequest;
 import com.sazonov.mainonlineshop.mapper.ShopMapper;
 import com.sazonov.mainonlineshop.serviceinterface.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;

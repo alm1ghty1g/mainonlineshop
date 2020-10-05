@@ -2,7 +2,7 @@ package com.sazonov.mainonlineshop.mapper;
 
 import com.sazonov.mainonlineshop.dto.CreditCardDto;
 import com.sazonov.mainonlineshop.dto.UserDto;
-import com.sazonov.mainonlineshop.dto.formDto.AddCardDtoRequest;
+import com.sazonov.mainonlineshop.dto.formdto.AddCardDtoRequest;
 import com.sazonov.mainonlineshop.exception.CreditCardIsAlreadyExistException;
 import com.sazonov.mainonlineshop.repository.CreditCardRepository;
 import com.sazonov.mainonlineshop.repository.UserRepository;
